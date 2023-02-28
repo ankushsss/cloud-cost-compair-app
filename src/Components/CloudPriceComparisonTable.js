@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Box, Typography, useTheme } from "@mui/material";
+import { Avatar, Box, Hidden, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { mockDataInvoices } from "../data/mockData";
@@ -28,7 +28,7 @@ const CloudPriceComparisonTable = () => {
   )
   const [newRowData, setNewRowData] = useState([])
   const [filterNewRowData, setFilterNewRowData] = useState([])
- 
+
   async function getData(url) {
     // Default options are marked with *
     const response = await fetch(url, {
@@ -165,7 +165,7 @@ const CloudPriceComparisonTable = () => {
       cellClassName: "name-column--cell",
       width: 350,
       renderCell: (params) => {
-        return params.row.azurePrice ? <div style={{ color: "black" }}><p style={{ color: "grey" }}>{params.row.azureLocation}<br /> {params.row.azureOs} <br />vCPU:{params.row.azureVCPU}<br />Memory:{params.row.azureMemory}<br /></p></div> : "";
+        return params.row.azurePrice ? <div style={{ color: "#2e2e33" }}><p style={{ color: "#2e2e33" }}>{params.row.azureLocation}<br /> {params.row.azureOs} <br />vCPU:{params.row.azureVCPU}<br />Memory:{params.row.azureMemory}<br /></p></div> : "";
       }
     },
     {
@@ -174,14 +174,14 @@ const CloudPriceComparisonTable = () => {
       cellClassName: "name-column--cell",
       width: 350,
       renderHeader: (params) => {
-        return <Avatar src="aws.png" />
+        return <Avatar variant="square" src="aws_dark.svg" />
       },
       renderCell: (params) => {
         return params.row.awsInstanceType ? <div>
-          {parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) == Math.max(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) :null, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) :null, params.row.azurePrice? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) :null) ?<div  style={{ color: "red" }}><p style={{color:'black'}}>{params.row.awsInstanceType}</p><label >OnD: $ {parseFloat(params.row.awsPrice).toFixed(2)} /month</label><br /> <div style={{ color: 'red' }}>OnD: $ {parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2)} /hour</div></div> :
-            parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) == Math.min( params.row.gcpPrice? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : 1000, params.row.awsPrice  ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : 1000, params.row.azurePrice? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : 1000) ?<div style={{ color: "green" }}><p  style={{ color: "black" }}>{params.row.awsInstanceType}</p><label >OnD: $ {parseFloat(params.row.awsPrice).toFixed(2)} /month</label><br /> <div style={{ color: 'green' }}>OnD: $ {parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2)} /hour</div> </div>:
-            <div><p style={{ color: "black" }}>{params.row.awsInstanceType}</p><label >OnD: $ {parseFloat(params.row.awsPrice).toFixed(2)} /month</label><br />
-              <div>OnD: $ {parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2)} /hour</div></div>}
+          {parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) == Math.max(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : null, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : null, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : null) ? <div style={{ color: "red" }}><p style={{ color: '#2e2e33' }}>{params.row.awsInstanceType}</p><label >OnD: $ <b>{parseFloat(params.row.awsPrice).toFixed(2)}</b> /month</label><br /> <div style={{ color: 'red' }}>OnD: $ <b>{parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2)}</b> /hour</div></div> :
+            parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) == Math.min(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : 1000, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : 1000, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : 1000) ? <div style={{ color: "green" }}><p style={{ color: "#2e2e33" }}>{params.row.awsInstanceType}</p><label >OnD: $ <b>{parseFloat(params.row.awsPrice).toFixed(2)}</b> /month</label><br /> <div style={{ color: 'green' }}>OnD: $ <b>{parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2)}</b> /hour</div> </div> :
+              <div><p style={{ color: "#2e2e33" }}>{params.row.awsInstanceType}</p><label >OnD: $ <b>{parseFloat(params.row.awsPrice).toFixed(2)}</b> /month</label><br />
+                <div>OnD: $ <b>{parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2)}</b> /hour</div></div>}
         </div> : ""
       }
 
@@ -192,13 +192,13 @@ const CloudPriceComparisonTable = () => {
       cellClassName: "name-column--cell",
       width: 350,
       renderHeader: (params) => {
-        return <Avatar src="azure.jpg" />
+        return <Avatar src="Azure_logo.svg" />
       },
       renderCell: (params) => {
         return params.row.azureInstanceType ? <div>
-          {parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) == Math.max(params.row.gcpPrice? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : null, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) :null, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) :null) ?<div style={{ color: "red" }}><p  style={{ color: "black" }} >{params.row.azureInstanceType}</p><label>OnD: $ {parseFloat(params.row.azurePrice).toFixed(2)} /month</label><br /> <div style={{ color: 'red' }}>OnD: $ {parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2)} /hour</div> </div>:
-           parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) == Math.min(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : 1000, params.row.awsPrice? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : 1000, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : 1000) ?<div style={{ color: "green" }}><p  style={{ color: "black" }} >{params.row.azureInstanceType}</p><label>OnD: $ {parseFloat(params.row.azurePrice).toFixed(2)} /month</label><br /> <div style={{ color: 'green' }}>OnD: $ {parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2)} /hour</div></div> :
-              <div><p style={{ color: "black" }}>{params.row.azureInstanceType}</p><label>OnD: $ {parseFloat(params.row.azurePrice).toFixed(2)} /month</label><br /> OnD: $ {parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2)} /hour</div>}
+          {parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) == Math.max(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : null, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : null, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : null) ? <div style={{ color: "red" }}><p style={{ color: "#2e2e33" }} >{params.row.azureInstanceType}</p><label>OnD: $ <b>{parseFloat(params.row.azurePrice).toFixed(2)}</b> /month</label><br /> <div style={{ color: 'red' }}>OnD: $ <b>{parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2)}</b> /hour</div> </div> :
+            parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) == Math.min(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : 1000, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : 1000, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : 1000) ? <div style={{ color: "green" }}><p style={{ color: "#2e2e33" }} >{params.row.azureInstanceType}</p><label>OnD: $ <b>{parseFloat(params.row.azurePrice).toFixed(2)}</b> /month</label><br /> <div style={{ color: 'green' }}>OnD: $ <b>{parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2)}</b> /hour</div></div> :
+              <div><p style={{ color: "#2e2e33" }}>{params.row.azureInstanceType}</p><label>OnD: $ <b>{parseFloat(params.row.azurePrice).toFixed(2)}</b> /month</label><br /> OnD: $ <b>{parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2)} </b>/hour</div>}
         </div> : "";
       }
     },
@@ -209,14 +209,14 @@ const CloudPriceComparisonTable = () => {
       width: 350,
 
       renderHeader: (params) => {
-        return <Avatar src="gcp.png" />
+        return <Avatar sx={{ objectFit: 'contain' }} src="GCP_logo.svg" />
       },
       renderCell: (params) => {
         return params.row.gcpArrayInstanceType ? <div>
           {
-            parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) == Math.max(params.row.gcpPrice? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : null, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) :null, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) :null) ?<div style={{ color: "red" }}><p  style={{ color: "black" }} >{params.row.gcpArrayInstanceType}</p><label>OnD: $ {parseFloat(params.row.gcpPrice).toFixed(2)} /month</label><br /> <div style={{ color: 'red' }}>OnD: $ {parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2)} /hour</div></div> :
-              parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) == Math.min(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : 1000, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : 1000, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : 1000) ?<div style={{ color: "green" }}><p  style={{ color: "black" }}>{params.row.gcpArrayInstanceType}</p><label>OnD: $ {parseFloat(params.row.gcpPrice).toFixed(2)} /month</label><br /> <div style={{ color: 'green' }}>OnD: $ {parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2)} /hour</div> </div>:
-                <div><p style={{ color: "black" }}>{params.row.gcpArrayInstanceType}</p><label>OnD: $ {parseFloat(params.row.gcpPrice).toFixed(2)} /month</label><br /><div>OnD: $ {parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2)} /hour</div></div>
+            parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) == Math.max(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : null, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : null, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : null) ? <div style={{ color: "red" }}><p style={{ color: "#2e2e33" }} >{params.row.gcpArrayInstanceType}</p><label>OnD: $ <b>{parseFloat(params.row.gcpPrice).toFixed(2)}</b> /month</label><br /> <div style={{ color: 'red' }}>OnD: $ <b>{parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2)}</b> /hour</div></div> :
+              parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) == Math.min(params.row.gcpPrice ? parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2) : 1000, params.row.awsPrice ? parseFloat(parseInt(params.row.awsPrice) / 720).toFixed(2) : 1000, params.row.azurePrice ? parseFloat(parseInt(params.row.azurePrice) / 720).toFixed(2) : 1000) ? <div style={{ color: "green" }}><p style={{ color: "#2e2e33" }}>{params.row.gcpArrayInstanceType}</p><label>OnD: $ <b>{parseFloat(params.row.gcpPrice).toFixed(2)}</b> /month</label><br /> <div style={{ color: 'green' }}>OnD: $ <b>{parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2)}</b> /hour</div> </div> :
+                <div><p style={{ color: "#2e2e33" }}>{params.row.gcpArrayInstanceType}</p><label>OnD: $ <b>{parseFloat(params.row.gcpPrice).toFixed(2)}</b> /month</label><br /><div>OnD: $ <b>{parseFloat(parseInt(params.row.gcpPrice) / 720).toFixed(2)}</b> /hour</div></div>
           }
 
         </div> : "";
@@ -263,8 +263,11 @@ const CloudPriceComparisonTable = () => {
   return (
     <div>
       <Box m="20px" textAlign="center" >
+        <div>
+          <Typography variant="h3" sx={{color:'#2e2e33',marginBottom:"20px"}} >Cloud Price Comparision</Typography>
+        </div>
         <FormControl sx={{ width: "200px", margin: "0 auto", }}>
-          <InputLabel id="demo-simple-select-label">Os</InputLabel>
+          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }}>Os</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -278,7 +281,7 @@ const CloudPriceComparisonTable = () => {
           </Select>
         </FormControl>
         <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
-          <InputLabel id="demo-simple-select-label">vCPU</InputLabel>
+          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }} >vCPU</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -297,7 +300,7 @@ const CloudPriceComparisonTable = () => {
         </FormControl>
 
         <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Memory</InputLabel>
+          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }}>Memory</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -316,7 +319,7 @@ const CloudPriceComparisonTable = () => {
           </Select>
         </FormControl>
         <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }}>Location</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -334,34 +337,38 @@ const CloudPriceComparisonTable = () => {
 
         <Box
           m="8px 0 0 0"
-          width="100%"
           height="80vh"
+          width='90%'
+          margin='0 auto'
+
 
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
+              borderColor: "#e6f3ff"
             },
             "& .MuiDataGrid-cell": {
               borderBottom: "none",
             },
             "& .name-column--cell": {
-              color: "black",
+              color: "#2e2e33",
+              backgroundColor: 'white'
             },
             "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: colors.primary[400],
-              color: "black",
+              backgroundColor: '#98d5ed',
+              color: "#2e2e33",
               borderBottom: "none",
             },
             "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: colors.primary[400],
+              backgroundColor: "white",
             },
             "& .MuiDataGrid-footerContainer": {
               // borderTop: "none",
-              backgroundColor: colors.primary[400],
-              color: "black"
+              backgroundColor: '#98d5ed',
+              color: "#2e2e33"
             },
             "& .MuiCheckbox-root": {
-              color: `black`,
+              color: `#2e2e33`,
             },
             "& .MuiChackbox-root": {
               color: `${colors.greenAccent[300]} !important`,
@@ -370,7 +377,7 @@ const CloudPriceComparisonTable = () => {
 
         >
 
-          <DataGrid rows={filterNewRowData} rowHeight={100} getRowId={(row) => row.id} columns={columns} />
+          <DataGrid rows={filterNewRowData} style={{ backgroundColor: 'white' }} rowHeight={100} getRowId={(row) => row.id} columns={columns} />
 
         </Box>
 
