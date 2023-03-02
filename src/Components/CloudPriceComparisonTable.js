@@ -3,8 +3,8 @@ import { Avatar, Box, Hidden, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { mockDataInvoices } from "../data/mockData";
-import comparison from "../comparison.json"
 
+import axios from "axios";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -81,79 +81,94 @@ const CloudPriceComparisonTable = () => {
 
 
     //       })
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`https://price-comparison-apim.azure-api.net/fnapp-price-comparison-dev/getPriceComparisonDemoFile`, {
+          headers: { 'Ocp-Apim-Subscription-Key': '8991cef815bb4884bb632e95c19b0d89' }
+        });
+        console.log(res.data, "10000")
+        let comparison = res.data.data // Log the response data
+      // Return the response data
+      comparison.map((res) => {
 
-    setSelectedArrayData(comparison)
-
-    console.log(comparison, "comparison")
-    comparison.map((res) => {
-
-      console.log(res, "rd")
-
-    })
-    var awsArray = comparison.filter(function (item) {
-      return item.CloudProvider == "AWS";
-    });
-    var AzureArray = comparison.filter(function (item) {
-      return item.CloudProvider == "Azure";
-    });
-
-    var GcpArray = comparison.filter(function (item) {
-      return item.CloudProvider == "GCP";
-    });
-    console.log(awsArray, "arrayData")
-    console.log(AzureArray, "arrayData")
-    console.log(GcpArray, "arrayData")
-
-    // if(awsArray.length < AzureArray.length)
-    let maxLength = Math.max(awsArray.length, AzureArray.length, GcpArray.length)
-    let outerObject = {}
-    let outerArray = []
-
-    for (let combineRow = 0; combineRow < maxLength; combineRow++) {
-      outerObject = {
-        id: combineRow,
-
-
-
-        awsInstanceType: awsArray[combineRow] ? awsArray[combineRow].InstanceType : "",
-        awsvCPU: awsArray[combineRow] ? awsArray[combineRow].vCPU : "",
-        awsMemory: awsArray[combineRow] ? awsArray[combineRow].Memory : "",
-        awsPrice: awsArray[combineRow] ? `${awsArray[combineRow].Price}` : "",
-        awsOs: awsArray[combineRow] ? `${awsArray[combineRow].OperatingSystem}` : "",
-        awsLocation: awsArray[combineRow] ? `${awsArray[combineRow].Location}` : "",
-
-
-
-
-
-        azureInstanceType: AzureArray[combineRow] ? AzureArray[combineRow].InstanceType : "",
-        azureVCPU: AzureArray[combineRow] ? AzureArray[combineRow].vCPU : "",
-        azureMemory: AzureArray[combineRow] ? AzureArray[combineRow].Memory : "",
-        azurePrice: AzureArray[combineRow] ? `${AzureArray[combineRow].Price}` : "",
-        azureOs: AzureArray[combineRow] ? `${AzureArray[combineRow].OperatingSystem}` : "",
-        azureLocation: AzureArray[combineRow] ? `${AzureArray[combineRow].Location}` : "",
-
-
-
-
-
-        gcpArrayInstanceType: GcpArray[combineRow] ? GcpArray[combineRow].InstanceType : "",
-        gcpVCPU: GcpArray[combineRow] ? GcpArray[combineRow].vCPU : "",
-        gcpMemory: GcpArray[combineRow] ? GcpArray[combineRow].Memory : "",
-        gcpPrice: GcpArray[combineRow] ? `${GcpArray[combineRow].Price}` : "",
-        gcpOs: GcpArray[combineRow] ? `${GcpArray[combineRow].OperatingSystem}` : "",
-        gcpLocation: GcpArray[combineRow] ? `${GcpArray[combineRow].Location}` : "",
-
-
-
-
-
+        console.log(res, "rd")
+  
+      })
+      var awsArray = comparison.filter(function (item) {
+        console.log(item,"108");  
+        return item.CloudProvider == "AWS";
+      });
+      var AzureArray = comparison.filter(function (item) {
+        return item.CloudProvider == "Azure";
+      });
+  
+      var GcpArray = comparison.filter(function (item) {
+        return item.CloudProvider == "GCP";
+      });
+      console.log(awsArray, "arrayData")
+      console.log(AzureArray, "arrayData")
+      console.log(GcpArray, "arrayData")
+  
+      // if(awsArray.length < AzureArray.length)
+      let maxLength = Math.max(awsArray.length, AzureArray.length, GcpArray.length)
+      let outerObject = {}
+      let outerArray = []
+  
+      for (let combineRow = 0; combineRow < maxLength; combineRow++) {
+        outerObject = {
+          id: combineRow,
+  
+  
+  
+          awsInstanceType: awsArray[combineRow] ? awsArray[combineRow].InstanceType : "",
+          awsvCPU: awsArray[combineRow] ? awsArray[combineRow].vCPU : "",
+          awsMemory: awsArray[combineRow] ? awsArray[combineRow].Memory : "",
+          awsPrice: awsArray[combineRow] ? `${awsArray[combineRow].Price}` : "",
+          awsOs: awsArray[combineRow] ? `${awsArray[combineRow].OperatingSystem}` : "",
+          awsLocation: awsArray[combineRow] ? `${awsArray[combineRow].Location}` : "",
+  
+  
+  
+  
+  
+          azureInstanceType: AzureArray[combineRow] ? AzureArray[combineRow].InstanceType : "",
+          azureVCPU: AzureArray[combineRow] ? AzureArray[combineRow].vCPU : "",
+          azureMemory: AzureArray[combineRow] ? AzureArray[combineRow].Memory : "",
+          azurePrice: AzureArray[combineRow] ? `${AzureArray[combineRow].Price}` : "",
+          azureOs: AzureArray[combineRow] ? `${AzureArray[combineRow].OperatingSystem}` : "",
+          azureLocation: AzureArray[combineRow] ? `${AzureArray[combineRow].Location}` : "",
+  
+  
+  
+  
+  
+          gcpArrayInstanceType: GcpArray[combineRow] ? GcpArray[combineRow].InstanceType : "",
+          gcpVCPU: GcpArray[combineRow] ? GcpArray[combineRow].vCPU : "",
+          gcpMemory: GcpArray[combineRow] ? GcpArray[combineRow].Memory : "",
+          gcpPrice: GcpArray[combineRow] ? `${GcpArray[combineRow].Price}` : "",
+          gcpOs: GcpArray[combineRow] ? `${GcpArray[combineRow].OperatingSystem}` : "",
+          gcpLocation: GcpArray[combineRow] ? `${GcpArray[combineRow].Location}` : "",
+  
+  
+  
+  
+  
+        }
+        outerArray.push(outerObject)
       }
-      outerArray.push(outerObject)
-    }
-    console.log(outerArray, "outerArray")
-    setNewRowData(outerArray)
-    setFilterNewRowData(outerArray)
+      console.log(outerArray, "outerArray")
+      setNewRowData(outerArray)
+      setFilterNewRowData(outerArray)
+      } catch (err) {
+        console.log(err, "err"); // Log any errors
+        return null; // Return null to indicate an error
+      }
+    };
+    fetchData();
+    console.log("ehllo");
+    // setSelectedArrayData(comparison)
+
+  
 
 
 
