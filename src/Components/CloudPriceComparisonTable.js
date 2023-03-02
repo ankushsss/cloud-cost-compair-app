@@ -1,3 +1,4 @@
+import Skeleton from '@mui/material/Skeleton';
 import React, { useState, useEffect } from "react";
 import { Avatar, Box, Hidden, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -14,8 +15,7 @@ import Select from '@mui/material/Select';
 const CloudPriceComparisonTable = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [selectedArrayData, setSelectedArrayData] = useState([])
-  const [selectedNewArrayData, setSelectedNewArrayData] = useState([])
+  const [loading, setLoading] = useState(true);
   // const [filterselectedNewArrayData, setSelectedNewArrayData] = useState([])
 
   const [tables, setTAbles] = useState(
@@ -87,77 +87,78 @@ const CloudPriceComparisonTable = () => {
         });
         console.log(res.data, "10000")
         let comparison = res.data.data // Log the response data
-      // Return the response data
-      comparison.map((res) => {
+        // Return the response data
+        setLoading(false);
+        comparison.map((res) => {
 
-        console.log(res, "rd")
-  
-      })
-      var awsArray = comparison.filter(function (item) {
-        console.log(item,"108");  
-        return item.CloudProvider == "AWS";
-      });
-      var AzureArray = comparison.filter(function (item) {
-        return item.CloudProvider == "Azure";
-      });
-  
-      var GcpArray = comparison.filter(function (item) {
-        return item.CloudProvider == "GCP";
-      });
-      console.log(awsArray, "arrayData")
-      console.log(AzureArray, "arrayData")
-      console.log(GcpArray, "arrayData")
-  
-      // if(awsArray.length < AzureArray.length)
-      let maxLength = Math.max(awsArray.length, AzureArray.length, GcpArray.length)
-      let outerObject = {}
-      let outerArray = []
-  
-      for (let combineRow = 0; combineRow < maxLength; combineRow++) {
-        outerObject = {
-          id: combineRow,
-  
-  
-  
-          awsInstanceType: awsArray[combineRow] ? awsArray[combineRow].InstanceType : "",
-          awsvCPU: awsArray[combineRow] ? awsArray[combineRow].vCPU : "",
-          awsMemory: awsArray[combineRow] ? awsArray[combineRow].Memory : "",
-          awsPrice: awsArray[combineRow] ? `${awsArray[combineRow].Price}` : "",
-          awsOs: awsArray[combineRow] ? `${awsArray[combineRow].OperatingSystem}` : "",
-          awsLocation: awsArray[combineRow] ? `${awsArray[combineRow].Location}` : "",
-  
-  
-  
-  
-  
-          azureInstanceType: AzureArray[combineRow] ? AzureArray[combineRow].InstanceType : "",
-          azureVCPU: AzureArray[combineRow] ? AzureArray[combineRow].vCPU : "",
-          azureMemory: AzureArray[combineRow] ? AzureArray[combineRow].Memory : "",
-          azurePrice: AzureArray[combineRow] ? `${AzureArray[combineRow].Price}` : "",
-          azureOs: AzureArray[combineRow] ? `${AzureArray[combineRow].OperatingSystem}` : "",
-          azureLocation: AzureArray[combineRow] ? `${AzureArray[combineRow].Location}` : "",
-  
-  
-  
-  
-  
-          gcpArrayInstanceType: GcpArray[combineRow] ? GcpArray[combineRow].InstanceType : "",
-          gcpVCPU: GcpArray[combineRow] ? GcpArray[combineRow].vCPU : "",
-          gcpMemory: GcpArray[combineRow] ? GcpArray[combineRow].Memory : "",
-          gcpPrice: GcpArray[combineRow] ? `${GcpArray[combineRow].Price}` : "",
-          gcpOs: GcpArray[combineRow] ? `${GcpArray[combineRow].OperatingSystem}` : "",
-          gcpLocation: GcpArray[combineRow] ? `${GcpArray[combineRow].Location}` : "",
-  
-  
-  
-  
-  
+          console.log(res, "rd")
+
+        })
+        var awsArray = comparison.filter(function (item) {
+          console.log(item, "108");
+          return item.CloudProvider == "AWS";
+        });
+        var AzureArray = comparison.filter(function (item) {
+          return item.CloudProvider == "Azure";
+        });
+
+        var GcpArray = comparison.filter(function (item) {
+          return item.CloudProvider == "GCP";
+        });
+        console.log(awsArray, "arrayData")
+        console.log(AzureArray, "arrayData")
+        console.log(GcpArray, "arrayData")
+
+        // if(awsArray.length < AzureArray.length)
+        let maxLength = Math.max(awsArray.length, AzureArray.length, GcpArray.length)
+        let outerObject = {}
+        let outerArray = []
+
+        for (let combineRow = 0; combineRow < maxLength; combineRow++) {
+          outerObject = {
+            id: combineRow,
+
+
+
+            awsInstanceType: awsArray[combineRow] ? awsArray[combineRow].InstanceType : "",
+            awsvCPU: awsArray[combineRow] ? awsArray[combineRow].vCPU : "",
+            awsMemory: awsArray[combineRow] ? awsArray[combineRow].Memory : "",
+            awsPrice: awsArray[combineRow] ? `${awsArray[combineRow].Price}` : "",
+            awsOs: awsArray[combineRow] ? `${awsArray[combineRow].OperatingSystem}` : "",
+            awsLocation: awsArray[combineRow] ? `${awsArray[combineRow].Location}` : "",
+
+
+
+
+
+            azureInstanceType: AzureArray[combineRow] ? AzureArray[combineRow].InstanceType : "",
+            azureVCPU: AzureArray[combineRow] ? AzureArray[combineRow].vCPU : "",
+            azureMemory: AzureArray[combineRow] ? AzureArray[combineRow].Memory : "",
+            azurePrice: AzureArray[combineRow] ? `${AzureArray[combineRow].Price}` : "",
+            azureOs: AzureArray[combineRow] ? `${AzureArray[combineRow].OperatingSystem}` : "",
+            azureLocation: AzureArray[combineRow] ? `${AzureArray[combineRow].Location}` : "",
+
+
+
+
+
+            gcpArrayInstanceType: GcpArray[combineRow] ? GcpArray[combineRow].InstanceType : "",
+            gcpVCPU: GcpArray[combineRow] ? GcpArray[combineRow].vCPU : "",
+            gcpMemory: GcpArray[combineRow] ? GcpArray[combineRow].Memory : "",
+            gcpPrice: GcpArray[combineRow] ? `${GcpArray[combineRow].Price}` : "",
+            gcpOs: GcpArray[combineRow] ? `${GcpArray[combineRow].OperatingSystem}` : "",
+            gcpLocation: GcpArray[combineRow] ? `${GcpArray[combineRow].Location}` : "",
+
+
+
+
+
+          }
+          outerArray.push(outerObject)
         }
-        outerArray.push(outerObject)
-      }
-      console.log(outerArray, "outerArray")
-      setNewRowData(outerArray)
-      setFilterNewRowData(outerArray)
+        console.log(outerArray, "outerArray")
+        setNewRowData(outerArray)
+        setFilterNewRowData(outerArray)
       } catch (err) {
         console.log(err, "err"); // Log any errors
         return null; // Return null to indicate an error
@@ -167,7 +168,7 @@ const CloudPriceComparisonTable = () => {
     console.log("ehllo");
     // setSelectedArrayData(comparison)
 
-  
+
 
 
 
@@ -274,133 +275,217 @@ const CloudPriceComparisonTable = () => {
       console.log(newOne)
     }
   }
+  const ComparisionTabel = () => {
+    return (
+      <Box
+        m="8px 0 0 0"
+        height="80vh"
+        width='90%'
+        margin='0 auto'
+
+
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "none",
+            borderColor: "#e6f3ff"
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },
+          "& .name-column--cell": {
+            color: "#2e2e33",
+            backgroundColor: 'white'
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: '#98d5ed',
+            color: "#2e2e33",
+            borderBottom: "none",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: "white",
+          },
+          "& .MuiDataGrid-footerContainer": {
+            // borderTop: "none",
+            backgroundColor: '#98d5ed',
+            color: "#2e2e33"
+          },
+          "& .MuiCheckbox-root": {
+            color: `#2e2e33`,
+          },
+          "& .MuiChackbox-root": {
+            color: `${colors.greenAccent[300]} !important`,
+          },
+        }}
+
+      >
+        <DataGrid rows={filterNewRowData} style={{ backgroundColor: 'white' }} rowHeight={100} getRowId={(row) => row.id} columns={columns} />
+      </Box>
+    );
+  }
   return (
     <div>
-    <img
-      src="CloudTrakr.png"
-      alt="Picture of the author"
-      width={
-        '20%'
-      }
-    />
+      <img
+        src="CloudTrakr.png"
+        alt="Picture of the author"
+        width={
+          '20%'
+        }
+      />
       <Box m="20px" textAlign="center" >
         <div>
-          <Typography variant="h3" sx={{color:'#2e2e33',marginBottom:"20px"}} >Cloud Price Comparision</Typography>
+          <Typography variant="h3" sx={{ color: '#2e2e33', marginBottom: "20px" }} >Cloud Price Comparision</Typography>
         </div>
-        <FormControl sx={{ width: "200px", margin: "0 auto", }}>
-          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }}>Os</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            onChange={(e) => setFilter(e, "Os")}
-            label="Os"
+        {loading ?
+          <Skeleton width={'100%'}>
+            <div>
+              <FormControl sx={{ width: "200px", margin: "0 auto", }}>
+                <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>Os</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  onChange={(e) => setFilter(e, "Os")}
+                  label="Os"
 
-          >
-            <MenuItem value="Linux">Linux</MenuItem>
-            <MenuItem value="Window">Window</MenuItem>
+                >
+                  <MenuItem value="Linux">Linux</MenuItem>
+                  <MenuItem value="Window">Window</MenuItem>
 
-          </Select>
-        </FormControl>
-        <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
-          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }} >vCPU</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            onChange={(e) => setFilter(e, "vCPU")}
-            label="vCPU"
+                </Select>
+              </FormControl>
+              <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
+                <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }} >vCPU</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  onChange={(e) => setFilter(e, "vCPU")}
+                  label="vCPU"
 
-          >
-            <MenuItem value="4">4</MenuItem>
-            <MenuItem value="8">8</MenuItem>
-            <MenuItem value="12">12</MenuItem>
-            <MenuItem value="16">16</MenuItem>
-            <MenuItem value="32">32</MenuItem>
-
-
-          </Select>
-        </FormControl>
-
-        <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
-          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }}>Memory</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            onChange={(e) => setFilter(e, "Memory")}
-
-            label="Memory"
-
-          >
-            <MenuItem value="16 GiB">16</MenuItem>
-            <MenuItem value="32 GiB">32</MenuItem>
-            <MenuItem value="64 GiB">64</MenuItem>
-            <MenuItem value="128 GiB">128</MenuItem>
+                >
+                  <MenuItem value="4">4</MenuItem>
+                  <MenuItem value="8">8</MenuItem>
+                  <MenuItem value="12">12</MenuItem>
+                  <MenuItem value="16">16</MenuItem>
+                  <MenuItem value="32">32</MenuItem>
 
 
+                </Select>
+              </FormControl>
 
-          </Select>
-        </FormControl>
-        <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
-          <InputLabel id="demo-simple-select-label"  sx={{ fontWeight: 'bold' }}>Location</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            onChange={(e) => setFilter(e, "Location")}
+              <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
+                <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>Memory</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  onChange={(e) => setFilter(e, "Memory")}
 
-            label="Location"
+                  label="Memory"
 
-          >
-            <MenuItem value="us-west-2">us-west-2</MenuItem>
-            <MenuItem value="us-west-1">us-west-1</MenuItem>
-          </Select>
-        </FormControl>
+                >
+                  <MenuItem value="16 GiB">16</MenuItem>
+                  <MenuItem value="32 GiB">32</MenuItem>
+                  <MenuItem value="64 GiB">64</MenuItem>
+                  <MenuItem value="128 GiB">128</MenuItem>
+
+
+
+                </Select>
+              </FormControl>
+
+              <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
+                <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>Location</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  onChange={(e) => setFilter(e, "Location")}
+
+                  label="Location"
+
+                >
+                  <MenuItem value="us-west-2">us-west-2</MenuItem>
+                  <MenuItem value="us-west-1">us-west-1</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </Skeleton> :
+          <div>
+            <FormControl sx={{ width: "200px", margin: "0 auto", }}>
+              <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>Os</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(e) => setFilter(e, "Os")}
+                label="Os"
+
+              >
+                <MenuItem value="Linux">Linux</MenuItem>
+                <MenuItem value="Window">Window</MenuItem>
+
+              </Select>
+            </FormControl>
+            <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
+              <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }} >vCPU</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(e) => setFilter(e, "vCPU")}
+                label="vCPU"
+
+              >
+                <MenuItem value="4">4</MenuItem>
+                <MenuItem value="8">8</MenuItem>
+                <MenuItem value="12">12</MenuItem>
+                <MenuItem value="16">16</MenuItem>
+                <MenuItem value="32">32</MenuItem>
+
+
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
+              <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>Memory</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(e) => setFilter(e, "Memory")}
+
+                label="Memory"
+
+              >
+                <MenuItem value="16 GiB">16</MenuItem>
+                <MenuItem value="32 GiB">32</MenuItem>
+                <MenuItem value="64 GiB">64</MenuItem>
+                <MenuItem value="128 GiB">128</MenuItem>
+
+
+
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ width: "200px", margin: "0 auto", marginLeft: "10px" }}>
+              <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>Location</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={(e) => setFilter(e, "Location")}
+
+                label="Location"
+
+              >
+                <MenuItem value="us-west-2">us-west-2</MenuItem>
+                <MenuItem value="us-west-1">us-west-1</MenuItem>
+              </Select>
+            </FormControl>
+          </div>}
       </Box>
       <Box m="20px" sx={{ color: "white" }}>
 
-        <Box
-          m="8px 0 0 0"
-          height="80vh"
-          width='90%'
-          margin='0 auto'
-
-
-          sx={{
-            "& .MuiDataGrid-root": {
-              border: "none",
-              borderColor: "#e6f3ff"
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-            },
-            "& .name-column--cell": {
-              color: "#2e2e33",
-              backgroundColor: 'white'
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: '#98d5ed',
-              color: "#2e2e33",
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: "white",
-            },
-            "& .MuiDataGrid-footerContainer": {
-              // borderTop: "none",
-              backgroundColor: '#98d5ed',
-              color: "#2e2e33"
-            },
-            "& .MuiCheckbox-root": {
-              color: `#2e2e33`,
-            },
-            "& .MuiChackbox-root": {
-              color: `${colors.greenAccent[300]} !important`,
-            },
-          }}
-
-        >
-
-          <DataGrid rows={filterNewRowData} style={{ backgroundColor: 'white' }} rowHeight={100} getRowId={(row) => row.id} columns={columns} />
-
-        </Box>
+        {loading ?
+          <Skeleton sx={{ bgcolor: 'grey.300' }} variant="rounded" width={'100%'} height={'100%'} >
+            <ComparisionTabel />
+          </Skeleton>
+          :
+          <ComparisionTabel />
+        }
 
       </Box>
     </div>
