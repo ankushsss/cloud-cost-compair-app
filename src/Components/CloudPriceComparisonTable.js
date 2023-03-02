@@ -3,7 +3,6 @@ import { Avatar, Box, Hidden, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { mockDataInvoices } from "../data/mockData";
-
 import axios from "axios";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -83,7 +82,7 @@ const CloudPriceComparisonTable = () => {
     //       })
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://price-comparison-apim.azure-api.net/fnapp-price-comparison-dev/getPriceComparisonDemoFile`, {
+        const res = await axios.get('https://price-comparison-apim.azure-api.net/fnapp-price-comparison-dev/getPriceComparisonDemoFile', {
           headers: { 'Ocp-Apim-Subscription-Key': '8991cef815bb4884bb632e95c19b0d89' }
         });
         console.log(res.data, "10000")
@@ -277,6 +276,13 @@ const CloudPriceComparisonTable = () => {
   }
   return (
     <div>
+    <img
+      src="CloudTrakr.png"
+      alt="Picture of the author"
+      width={
+        '20%'
+      }
+    />
       <Box m="20px" textAlign="center" >
         <div>
           <Typography variant="h3" sx={{color:'#2e2e33',marginBottom:"20px"}} >Cloud Price Comparision</Typography>
